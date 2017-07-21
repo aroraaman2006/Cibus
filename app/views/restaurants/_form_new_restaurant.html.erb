@@ -1,0 +1,19 @@
+<div class="col-md-6 col-md-offset-3">
+<div class="new-restaurant-form">
+	<%= simple_form_for @restaurant do |f| %>
+		<%= f.input :name, label: "Restaurant Name" %>		
+		<%= f.input :state, label: "State" %>
+		<%= f.input :city, label: "City" %>
+		<%= f.input :area, label: "Area/Locality" %>
+		<%= f.input :address, label: "Address" %><br>
+		<%= f.file_field :restaurant_img %>
+		
+		<% if @restaurant.persisted? %>
+    	<%= link_to 'Remove photo', remove_restaurant_photo_path %>
+  		<% end %>
+		
+		<%= f.association:categories, as: :check_boxes, label: " Select appropriate Categories -" %>
+		<%= f.button :submit, :class => 'btn-custom2' %>
+	<% end %>
+</div>
+</div>

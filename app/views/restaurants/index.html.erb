@@ -1,0 +1,22 @@
+<% if @restaurants ==[] %>
+  <h1> Welcome! Register, Sign In and add the first restaurant!!! </h1>
+<% else %>
+  <% if @category == nil %>
+  <h2>Latest Additions ... </h2>
+  <% end %>
+  <br>
+  <div class = "row">
+    <% @restaurants.each do |restaurant| %>
+      <div class = "col-md-3">
+        <h2><%= link_to (restaurant.name), restaurant_path(restaurant) %></h2>
+        <a href="/restaurants/<%= restaurant.id %>" >
+        <% if restaurant.restaurant_img? %>
+        <%= image_tag restaurant.restaurant_img.url(:restaurant_index), class: "restaurant" %>
+        <% else %>
+        <%= image_tag ("image_unavailable.png"), class: "restaurant" %>
+        <%end%>
+        </a>
+      </div>
+    <% end %>
+  </div>
+<% end %>

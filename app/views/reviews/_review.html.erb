@@ -1,0 +1,11 @@
+<div class="review-rating" data-score="<%= review.rating %>"></div>
+<% if review.comment != "" %>
+<p>Remarks : <%= review.comment %><p>
+<% end %>
+<p>Posted by : <%= User.find_by_id(review.user_id).email %><p>
+  <% if current_user %>
+    <% if review.user_id == current_user.id %>
+    <%= link_to "Edit Review", edit_restaurant_review_path(review.restaurant, review) %>
+	<%= link_to "Delete Review", restaurant_review_path(review.restaurant, review), method: :delete, data: {confirm: "Are you sure?"} %>
+    <% end %>
+<% end %>

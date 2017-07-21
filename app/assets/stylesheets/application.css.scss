@@ -1,0 +1,207 @@
+@import url(http://fonts.googleapis.com/css?family=Lora|Ubuntu:300,400,500);
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+/* Mixins */
+@mixin background-tile {
+  box-sizing: border-box;
+  background-color: #F0FFF0;
+  border-radius: 5px;
+  box-shadow: 3px 3px 5px 6px #ccc;
+  padding: 1.5em 1.25em;
+}
+
+
+/* Basic styles */
+
+body {
+  background-color: #FFE4C4;
+  font-family: 'Lora', serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 300;
+}
+
+p.alert, p.notice {
+  margin: 0 0 0 30px;
+  font-size: 150%;
+}
+
+
+
+/* Navbar/navigation styles */
+
+.navbar {
+  font-family: 'Ubuntu', sans-serif;
+  text-transform: uppercase;
+}
+
+.navbar-default {
+  background-color: #F0FFF0;
+  padding-bottom: 5px;
+  padding-top: 5px;
+
+  .navbar-nav > li > a {
+    color: black;
+    &:hover {
+      color: darken(#f1c40f, 5%);
+      transition: 0.5s;
+    }
+  }
+
+  .navbar-header {
+    .navbar-brand {
+      color: #222;
+      letter-spacing: 1.4px;
+    }
+  }
+
+  .dropdown-menu > li > a:hover {
+    background-color: darken(#f1c40f, 5%);
+    color: #fff;
+  }
+
+  .navbar-nav > .open > a, .navbar-nav > .open > a:hover, .navbar-nav > .open > a:focus {
+    background-color: darken(#f1c40f, 5%);
+    color: #fff;  
+  }
+}
+
+.dropdown-menu > .active > a {
+  background-color: #f1c40f;
+  color: #fff;
+}
+
+/* restaurant styles */
+
+.restaurant {
+  height: 250px;
+  width: 250px;
+}
+
+.restaurant-show {
+  height: 385px;
+  width: 325px;
+  @include background-tile;
+}
+
+.restaurant-info {
+  @include background-tile;
+
+  .restaurant-title {
+    margin-top: 0;
+    font-size: 2em;
+  }
+
+  .avg-rating {
+    font-size: 1.5em;
+    margin-top: 15px;
+    margin-bottom: 5px;
+  }
+
+  .number-of-reviews {
+    font-size: 0.85em;
+    font-style: italic;
+  }
+
+  .restaurant-category {
+    font-size: 1.5em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    span {
+      font-size: 0.80em;
+    } 
+  }
+
+}
+
+/* Button/link styles */
+
+.btn-custom {
+  color: darken(#f1c40f, 5%);
+  background-color: #fff;
+  border: 1px solid darken(#f1c40f, 5%);
+  padding: 8px 20px;
+  border-radius: 5px;
+  font-family: 'Ubuntu', sans-serif;
+  &:hover {
+    text-decoration: none;
+    background-color: darken(#f1c40f, 5%);
+    color: #fff;
+    transition: 0.5s;
+  }
+}
+
+.btn-custom2 {
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #222;
+  padding: 8px 20px;
+  border-radius: 5px;
+  font-family: 'Ubuntu', sans-serif;
+  &:hover {
+    text-decoration: none;
+    background-color: #333;
+    color: #fff;
+    transition: 0.5s;
+  } 
+}
+
+.links {
+
+  .btn-custom {
+    padding: 3px 10px;
+    font-weight: 300;
+  }
+
+}
+
+.restaurant-links {
+
+  .btn-custom {
+    padding: 3px 10px;
+    font-weight: 300;
+    margin-top: 40px; 
+  }
+
+}
+
+/* Form Styles */
+
+.new-restaurant-form {
+  display:block;
+  @include background-tile;
+
+h1 {
+  margin-top: 0;
+}
+
+#category_id {
+  margin-bottom: 10px;
+}
+
+#restaurant_restaurant_img {
+  margin-bottom: 10px;
+}
+
+}
+
+/* Signup/Login form styles */
+
+.signup-form {
+  @include background-tile;
+
+  h2 {
+    margin-top: 0;
+  }
+}
+
+.login-form {
+  @include background-tile;
+
+  h2 {
+    margin-top: 0;
+  }
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cibus</title>
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default">
+    <div class="container">
+
+      <div class="navbar-header">
+      <%= link_to "Cibus", root_path, class: "navbar-brand" %>
+      </div>
+
+      <ul class="nav navbar-nav navbar-right">
+      <% if current_user %>
+      <li><%= link_to current_user.name, user_path(current_user) %></li>
+      <li><%= link_to "Sign Out", logout_path %></li>
+      <% else %>
+      <li><%= link_to "Sign Up", new_user_path %></li>
+      <li><%= link_to "Sign In", login_path %></li>
+      <% end %>
+      </ul>
+
+      <ul class="nav navbar-nav">
+
+        <% if current_user %>
+        <li><%= link_to "Add Restaurant", new_restaurant_path %></li>
+        <% if current_user.admin == true %>
+        <li><%= link_to "Enter Category Panel", categories_path %></li>
+        <% end %>
+        <% end %>
+
+        <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">View Categories <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+        <% Category.all.each do |k| %>
+        <li>
+        <%= link_to k.name, restaurants_path(category: k.name), class: "link" %>
+        <li>
+        <% end %>
+        </ul>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
+<div class="container">
+<%= yield %>
+</div>
+
+</body>
+</html>
