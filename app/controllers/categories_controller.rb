@@ -1,14 +1,13 @@
 class CategoriesController < ApplicationController
 	before_action :authorize
-		def index
-			check_admin			
+	before_action :check_admin
+	before_action :find_category, except: [:index, :new, :create]
+		def index	
 			@categories = Category.all
 		end
 
-		def create		
-			check_admin
+		def create
 			@category = Category.new(category_params)
-
 			if @category.save
 				redirect_to categories_path
 			else
@@ -16,9 +15,24 @@ class CategoriesController < ApplicationController
 			end
 		end
 
-		def new	
-			check_admin			
+		def new			
 			@category = Category.new
+		end
+
+		def edit
+		end
+
+		def update
+			if @category.update(category_params)
+				redirect_to categories_path
+			else
+			render 'edit', alert: "Update Unsuccesful!!"
+			end
+		end
+
+		def destroy
+			@category.destroy
+			redirect_to categories_path, alert: "Category Deleted!"
 		end
 
 		private
@@ -27,17 +41,13 @@ class CategoriesController < ApplicationController
 			params.require(:category).permit(:name)
 		end
 
-		def authorize
-			if current_user.nil?
-				redirect_to login_url, alert: "Please Login First!"
-			end
-		end
-
 		def check_admin
 			if current_user.admin != true
 				redirect_to root_path, alert: "Access Denied!"
 			end
 		end
 
-
+		def find_category
+			@category = Category.find(params[:id])
+		end
 end

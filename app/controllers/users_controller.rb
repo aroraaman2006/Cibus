@@ -15,7 +15,11 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
+    if current_user
+      redirect_to root_url, notice: 'Already Logged In, To register as new user, logout first!'
+    else
+      @user = User.new
+    end
   end
 
   def edit
@@ -52,11 +56,5 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
-    end
-
-    def authorize
-      if current_user.nil?
-        redirect_to login_url, alert: "Please Login First!"
-      end   
     end
 end

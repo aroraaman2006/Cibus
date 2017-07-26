@@ -1,12 +1,12 @@
 class ReviewsController < ApplicationController
 	before_action :authorize
+	before_action :find_restaurant
+	before_action :find_review, except: [:index, :new, :create]
 	def new
-		find_restaurant
 		@review = Review.new
 	end
 
 	def create
-		find_restaurant
 		@review = Review.new(review_params)
 		@review.restaurant_id = @restaurant.id
 		@review.user_id = current_user.id
@@ -19,9 +19,7 @@ class ReviewsController < ApplicationController
 	end
 
 	def edit
-		find_restaurant
 		find_review
-
 		if @review.user_id != current_user.id
 			redirect_to root_path, notice: "Access Denied!!!"
 		end
@@ -29,7 +27,6 @@ class ReviewsController < ApplicationController
 	end
 
 	def update
-		find_restaurant
 		find_review
 			if @review.update(review_params)
 			redirect_to restaurant_path(@restaurant)
@@ -39,7 +36,6 @@ class ReviewsController < ApplicationController
 	end
 
 	def destroy
-		find_restaurant
 		find_review
 		@review.destroy
 		redirect_to restaurant_path(@restaurant)
@@ -58,11 +54,4 @@ class ReviewsController < ApplicationController
 	def find_review
 		@review = Review.find(params[:id])
 	end
-
-	def authorize
-		if current_user.nil?
-			redirect_to login_url, alert: "Please Login First!"
-		end		
-	end
-
 end

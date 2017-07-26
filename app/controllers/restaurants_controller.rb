@@ -1,5 +1,6 @@
 class RestaurantsController < ApplicationController
 	before_action :authorize, except: [:show, :index]
+	before_action :find_restaurant, except: [:index, :new, :create]
 		def index
 			if params[:category].blank?
 				@restaurants = (Restaurant.all).reverse
@@ -10,8 +11,6 @@ class RestaurantsController < ApplicationController
 		end
 
 		def show
-			find_restaurant
-
 			if @restaurant.reviews.blank?
 				@average_review = 0
 			else
@@ -19,8 +18,7 @@ class RestaurantsController < ApplicationController
 			end
 		end
 
-		def edit
-			find_restaurant	
+		def edit	
 			if current_user.admin != true
 				if @restaurant.user_id != current_user.id		
 				redirect_to restaurant_path, notice: "Access Denied!!!"
@@ -43,19 +41,17 @@ class RestaurantsController < ApplicationController
 		end
 
 		def update
-			find_restaurant
 			if @restaurant.update(restaurant_params)
 				redirect_to restaurant_path(@restaurant)
 			else
-			render 'edit'
+			render 'edit', alert: "Update Unsuccesful!!"
 			end
 		end
 
 		def destroy
-			find_restaurant
-			if @restaurant.user_id == current_user.id
+			if ((@restaurant.user_id == current_user.id) or (current_user.admin = true))
 				@restaurant.destroy
-				redirect_to root_path
+				redirect_to root_path, alert: "Restaurant Deleted!"
 			else
 			redirect_to restaurant_path, alert: "Access Denied!"
 			end
@@ -65,7 +61,7 @@ class RestaurantsController < ApplicationController
 		    find_restaurant
 		    @restaurant.restaurant_img = nil
 		    @restaurant.save
-		    redirect_to @restaurant, flash: { success: 'User profile photo has been removed.' }
+		    redirect_to @restaurant, flash: { success: 'Restaurant photo has been removed.' }
   		end
 
 		private
@@ -76,11 +72,5 @@ class RestaurantsController < ApplicationController
 
 		def find_restaurant
 			@restaurant=Restaurant.find(params[:id])
-		end
-
-		def authorize
-			if current_user.nil?
-				redirect_to login_url, alert: "Please Login First!"
-			end		
 		end
 end

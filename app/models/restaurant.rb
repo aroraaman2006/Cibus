@@ -5,7 +5,7 @@ class Restaurant < ApplicationRecord
   validates :address, presence: true
 
   has_and_belongs_to_many :categories
-  has_many :reviews
+  has_many :reviews, dependent: :destroy
   belongs_to :user
 
   has_attached_file :restaurant_img, styles: { restaurant_index: "250x350>", restaurant_show: "325x475>" }, default_url: "/images/missing.png"
